@@ -1,4 +1,4 @@
-var util = require('../shared/Util.js');
+var util = require('./Util.js');
 var WebSocketServer = require('ws').Server;
 
 var wss;
