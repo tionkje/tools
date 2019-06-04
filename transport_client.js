@@ -2,7 +2,7 @@
   // var socketURL = 'ws://bastiaandeknudt.be/vevoer5/ws';
 var attemptin = 0;
 
-function Transport(socketURL){
+export default function Transport(socketURL){
   this.verbose = 0;
   this.connected = false; // if not connected we queue messages until reconnected
   this.sendQueue = []; // queue messages when not connected here
@@ -91,4 +91,3 @@ Transport.prototype.disconnect = function(){
   this.ws.close();
 };
 
-module.exports = Transport;
