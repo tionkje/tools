@@ -67,6 +67,8 @@ HttpServer.prototype._handler = function(req, res){
       req.headers.cookie.split(';').map(c=>{ c = c.split('=');  req.cookies[c.shift().trim()] = decodeURIComponent(c.join('='));});
     }
 
+    const start = Date.now();
+
     handler.handler({
       method:req.method,
       query:req.parsedUrl.query,
@@ -84,7 +86,7 @@ HttpServer.prototype._handler = function(req, res){
         res.end(JSON.stringify({ok:false, err:err.message}));
         return;
       }
-      if(!handler.noLog) req.log.debug('result:', trunc(JSON.stringify(result), 500));
+      if(!handler.noLog) req.log.debug(req.log.colors.time+(Date.now()-start)+'ms'+req.log.colors.reset,'result:', trunc(JSON.stringify(result), 500));
       res.end(JSON.stringify({ok:true, res:result}));
     }, req, res);
   });
