@@ -31,7 +31,6 @@ HttpServer.prototype._handler = function(req, res){
     res.end(req.parsedUrl.pathname+' not Supported');
     return;
   }
-  if(!handler.noLog) req.log.debug('%s - %s %s', req.method, req.parsedUrl.pathname, JSON.stringify(req.parsedUrl.query));
 
   var body = [];
   req.on('data', function(chunk){ body.push(chunk); });
@@ -48,6 +47,8 @@ HttpServer.prototype._handler = function(req, res){
       res.end('Failed parsing body');
       return;
     }
+
+    if(!handler.noLog) req.log.debug('%s - %s %s', req.method, req.parsedUrl.pathname, JSON.stringify(req.parsedUrl.query), body);
 
     if(body){
       // Json bodies
