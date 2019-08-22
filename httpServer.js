@@ -10,6 +10,7 @@ function HttpServer(opts, cb){
   var o = {port:opts.port||8080};
   this.port = o.port;
   this.server.listen(o, cb);
+  this.defaultHandler = {handler:opts.defaultHandler};
 
   // close server when we receive signal
   process.on('SIGTERM', ()=>{
@@ -24,7 +25,7 @@ function HttpServer(opts, cb){
 HttpServer.prototype._handler = function(req, res){
   req.parsedUrl = url.parse(req.url, true);
   req.log = this.log.child('reqId:'+this.reqIdCount++);
-  var handler = this.handlers.find(h=>req.parsedUrl.pathname==h.path);
+  var handler = this.handlers.find(h=>req.parsedUrl.pathname==h.path) || this.defaultHandler;
   if(!handler) {
     req.log.info('No handler found for %s', req.parsedUrl.pathname);
     res.writeHead(400, { });

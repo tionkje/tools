@@ -66,7 +66,7 @@ module.exports = class Transport{
     });
 
     wss.on('error', function(err){
-      this.log.fatal(err, 'Websocket Server Failed');
+      log.fatal(err, 'Websocket Server Failed');
       throw err;
     });
   }
